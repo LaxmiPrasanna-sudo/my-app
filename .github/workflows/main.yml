@@ -16,7 +16,7 @@ jobs:
       - name: Simulate Build
         run: echo "✅ Build successful (simulation)"
 
-      - name: Simulate Test
+      - name: Simulate Tests
         run: echo "✅ Tests passed (simulation)"
 
       - name: Simulate Deploy
