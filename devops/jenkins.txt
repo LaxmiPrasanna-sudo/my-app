@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/LaxmiPrasanna-sudo/ci-cd-pipeline-tajib.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Deploy to AWS') {
+            steps {
+                sh 'scp target/*.jar ec2-user@<AWS-EC2-IP>:/home/ec2-user/app/'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline Execution Completed'
+        }
+        success {
+            echo 'Deployment Successful ✅'
+        }
+        failure {
+            echo 'Build Failed ❌'
+        }
+    }
+}
